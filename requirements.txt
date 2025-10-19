@@ -1,0 +1,9 @@
+transformers
+datasets
+mlflow
+scikit-learn
+pandas
+pyyaml
+gradio
+prometheus-client
+dvc

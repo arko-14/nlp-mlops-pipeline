@@ -1,0 +1,13 @@
+data:
+     src: data
+     max_len : 128
+
+train:
+      model_name: distilbert-base-uncased
+      num_labels: 4
+      learning_rate: 3e-5
+      epochs: 2
+      batch_size: 8
+      train_subset: 4000
+      eval_subset: 1000
+      seed: 42

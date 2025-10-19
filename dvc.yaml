@@ -1,0 +1,36 @@
+stages:
+  prepare:
+    cmd: python -m training.data_prep --src ${data.src} --out data/processed
+    deps:
+      - training/data_prep.py
+    params:
+      - data.src
+    outs:
+      - data/processed
+
+  train:
+    cmd: python -m training.train --data_dir data/processed --out_dir models/fine_tuned
+    deps:
+      - training/train.py
+      - data/processed
+    params:
+      - train.model_name
+      - train.num_labels
+      - train.learning_rate
+      - train.epochs
+      - train.batch_size
+      - train.train_subset
+      - train.eval_subset
+      - train.seed
+      - data.max_len
+    outs:
+      - models/fine_tuned
+
+  evaluate:
+    cmd: python -m training.evaluate --model_dir models/fine_tuned --data_dir data/processed --report reports/metrics.json
+    deps:
+      - training/evaluate.py
+      - models/fine_tuned
+      - data/processed
+    outs:
+      - reports/metrics.json
