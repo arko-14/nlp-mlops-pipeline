@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python -m training.data_prep --src data --out data/processed
+    deps:
+    - path: training/data_prep.py
+      hash: md5
+      md5: 3efb44fd18ea11db3667b88a12492f61
+      size: 2474
+    params:
+      params.yaml:
+        data.src: data
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 1abcf315797a85df13678bd6653bc296.dir
+      size: 30847398
+      nfiles: 2
