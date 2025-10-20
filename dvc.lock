@@ -16,3 +16,33 @@ stages:
       md5: 1abcf315797a85df13678bd6653bc296.dir
       size: 30847398
       nfiles: 2
+  train:
+    cmd: python -m training.train --data_dir data/processed --out_dir 
+      models/fine_tuned
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 1abcf315797a85df13678bd6653bc296.dir
+      size: 30847398
+      nfiles: 2
+    - path: training/train.py
+      hash: md5
+      md5: 0c9591de74a2d621983d0a225a2a3d33
+      size: 4262
+    params:
+      params.yaml:
+        data.max_len: 128
+        train.batch_size: 8
+        train.epochs: 2
+        train.eval_subset: 1000
+        train.learning_rate: 3e-05
+        train.model_name: distilbert-base-uncased
+        train.num_labels: 4
+        train.seed: 42
+        train.train_subset: 4000
+    outs:
+    - path: models/fine_tuned
+      hash: md5
+      md5: 430d88f6ff02f7f664bf6e755a2d84dd.dir
+      size: 1875993114
+      nfiles: 21

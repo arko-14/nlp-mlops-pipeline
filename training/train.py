@@ -7,6 +7,21 @@ from training.utils import set_seed
 def load_params():
     with open("params.yaml") as f:
         return yaml.safe_load(f)
+    
+P = yaml.safe_load(open("params.yaml"))
+def _as_float(x): 
+    return float(x) if isinstance(x, (str, bytes)) else float(x)
+def _as_int(x): 
+    return int(x) if isinstance(x, (str, bytes)) else int(x)
+
+lr      = _as_float(P["train"]["learning_rate"])
+bs      = _as_int(P["train"]["batch_size"])
+epochs  = _as_int(P["train"]["epochs"])
+num_lbl = _as_int(P["train"]["num_labels"])
+max_len = _as_int(P["data"]["max_len"])
+
+# (optional) quick sanity print
+print(f"[types] lr={lr} ({type(lr)}), bs={bs} ({type(bs)}), epochs={epochs} ({type(epochs)})")    
 
 def build_ds(data_dir, tokenizer, max_len):
     train = pd.read_csv(os.path.join(data_dir, "train.csv"))
@@ -48,15 +63,20 @@ if __name__ == "__main__":
         return {"acc": accuracy_score(p.label_ids, preds),
                 "f1": f1_score(p.label_ids, preds, average="macro")}
 
+    P["train"]["learning_rate"] = float(P["train"]["learning_rate"])
+    P["train"]["batch_size"] = int(P["train"]["batch_size"])
+    P["train"]["epochs"] = int(P["train"]["epochs"])
+    P["train"]["num_labels"] = int(P["train"]["num_labels"])  
+
     args_tr = TrainingArguments(
         output_dir=a.out_dir,
         learning_rate=P["train"]["learning_rate"],
         per_device_train_batch_size=P["train"]["batch_size"],
         per_device_eval_batch_size=P["train"]["batch_size"],
         num_train_epochs=P["train"]["epochs"],
-        evaluation_strategy="epoch",
+        #evaluation_strategy="epoch",
         logging_steps=50,
-        no_cuda=True,  # CPU training
+        use_cpu=True,  # CPU training
         save_strategy="epoch",
         report_to=[],
     )

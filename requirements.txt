@@ -7,3 +7,4 @@ pyyaml
 gradio
 prometheus-client
 dvc
+accelerate
