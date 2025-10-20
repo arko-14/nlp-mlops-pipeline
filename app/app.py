@@ -45,6 +45,14 @@ def tail_logs():
             return "".join(f.readlines()[-200:])
     except FileNotFoundError:
         return "(no logs yet)"
+        
+metrics_app = fastapi.FastAPI()
+@metrics_app.get("/metrics")
+def _metrics():
+    return fastapi.responses.PlainTextResponse(pc.generate_latest().decode("utf-8"))
+# later
+demo = gr.Blocks(title="…")
+demo.mount("/metrics", metrics_app)    
 
 with gr.Blocks(title="Observa — Model + Monitoring") as demo:
     gr.Markdown("# 🧠 Observa — Model Inference & Monitoring")

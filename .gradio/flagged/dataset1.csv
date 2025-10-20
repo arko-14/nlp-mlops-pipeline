@@ -1,0 +1,9 @@
+Input text,output,timestamp
+health,"**Prediction:** Sci/Tech (id 3)
+**Confidence:** 75.56%
+**Latency:** 72 ms",2025-10-19 17:02:37.907386
+,"**Prediction:** Rejected (low confidence)
+
+**Most likely:** Sci/Tech (id 3)
+**Confidence:** 32.85%
+**Latency:** 443 ms",2025-10-20 11:10:34.124256

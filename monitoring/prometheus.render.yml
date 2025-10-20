@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 5s
+scrape_configs:
+  - job_name: gradio_app
+    static_configs:
+      - targets:
+        - ${APP_HOST_PORT}   # e.g., app-xxxxx.onrender.com
+    metrics_path: /metrics
+    scheme: https

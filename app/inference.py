@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import os, torch
 
-MODEL_DIR   = os.environ.get("MODEL_DIR", "models/fine_tuned")
+MODEL_ID  = os.getenv("MODEL_ID", "sandipan14/fine-grained")
 CONF_THRESH = float(os.environ.get("CONF_THRESH", "0.5"))
 
 # Optional: set your own labels via env, e.g. CLASS_LABELS="World,Sports,Business,Sci/Tech"
