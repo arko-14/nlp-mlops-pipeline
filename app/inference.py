@@ -1,16 +1,20 @@
+import os, time
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-import os, torch
+from huggingface_hub import snapshot_download
+import torch
 
 MODEL_ID  = os.getenv("MODEL_ID", "sandipan14/fine-grained")
 CONF_THRESH = float(os.environ.get("CONF_THRESH", "0.5"))
+
+model_path = snapshot_download(repo_id=MODEL_ID)
 
 # Optional: set your own labels via env, e.g. CLASS_LABELS="World,Sports,Business,Sci/Tech"
 _env_labels = os.getenv("CLASS_LABELS")
 ENV_LABELS = [s.strip() for s in _env_labels.split(",")] if _env_labels else None
 DEFAULT_AGNEWS = ["World", "Sports", "Business", "Sci/Tech"]
 
-tok = AutoTokenizer.from_pretrained(MODEL_ID)
-mdl = AutoModelForSequenceClassification.from_pretrained(MODEL_ID)
+tok = AutoTokenizer.from_pretrained(model_path)
+mdl = AutoModelForSequenceClassification.from_pretrained(model_path)
 
 # ----- normalize id2label so we never show LABEL_2 -----
 id2label = getattr(mdl.config, "id2label", None) or {}
