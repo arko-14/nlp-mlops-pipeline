@@ -6,6 +6,9 @@ Observa is an end-to-end NLP + MLOps pipeline that demonstrates fine-tuned model
 
 Key Highlights
 
+
+DVC Model versioning
+
 🧩 Fine-tuned DistilBERT model for text classification
 
 🖥️ Gradio web interface (with FastAPI backend)
@@ -19,4 +22,5 @@ Key Highlights
 🐳 Dockerized for quick local or cloud deployment
 
 🔐 Ready for OAuth integration and alerting (future scope)
+
 
