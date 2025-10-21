@@ -45,6 +45,8 @@ Project Overview
 
 Folder Structure
 
+```
+
 nlp-mlops-pipeline/
 │
 ├── .gitignore
@@ -128,6 +130,7 @@ docker compose up --build
 
 
 ```
+
 
 
 
