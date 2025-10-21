@@ -90,6 +90,7 @@ nlp-mlops-pipeline/
 │   ├── metrics.json               # Evaluation metrics summary
 
 
+```
     
 ⚙️ Local Setup
 
@@ -130,6 +131,7 @@ docker compose up --build
 
 
 ```
+
 
 
 
