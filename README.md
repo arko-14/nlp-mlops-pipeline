@@ -133,7 +133,85 @@ docker compose up --build
 
 ```
 
+📈 Grafana Setup
 
+📈 Grafana Setup
+
+1.Open Grafana at http://localhost:3000
+
+2.Add a Prometheus data source → URL: http://prometheus:9090
+
+3.Import or create panels with queries like:
+
+🧪 MLflow Experiment Tracking
+
+
+Training scripts automatically log metrics and artifacts to MLflow.
+If you want to use your own tracking server:
+
+```
+export MLFLOW_TRACKING_URI=http://localhost:5000
+
+```
+
+🧮 Sample Output
+
+Input:
+
+```
+
+UK markets rebound after inflation report
+
+```
+Output:
+
+```
+Prediction: Business (id 2)
+Confidence: 95.38%
+Latency: 1011 ms
+
+
+```
+🔧 Environment Variables
+
+📦 Docker Deployment
+
+```
+docker compose up --build
+
+```
+
+Then visit:
+
+App → localhost:7860
+
+Prometheus → localhost:9090
+
+Grafana → localhost:3000
+
+MLflow → localhost:5000
+
+
+🔭 Future Enhancements
+
+Add OAuth-based login for dashboards
+
+Integrate DVC for dataset versioning
+
+Automate retraining and redeploy via CI/CD
+
+Include Prometheus alerts for latency/error spikes
+
+Add SHAP or LIME explainability inside Gradio UI
+
+Deploy to cloud (Render / Oracle / AWS free tiers)
+
+
+
+🧾 License
+
+MIT License © 2025 — Sandipan
+Free to use and modify for educational and personal projects.
 
 
 
