@@ -8,3 +8,4 @@ datasets
 scikit-learn
 pyyaml
 dvc
+fastapi

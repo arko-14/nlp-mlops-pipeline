@@ -8,3 +8,4 @@ gradio
 prometheus-client
 dvc
 accelerate
+fastapi

@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: ../app       # <-- points to the folder that has Dockerfile + app.py
+      dockerfile: Dockerfile
+    environment:
+      - MODEL_ID=sandipan14/fine-grained
+      - CONF_THRESH=0.5
+      - CLASS_LABELS=World,Sports,Business,Sci/Tech
+    ports: ["7860:7860"]
+
+  prometheus:
+    image: prom/prometheus:v2.55.0
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prom-data:/prometheus
+    ports: ["9090:9090"]
+    depends_on: [app]
+
+  grafana:
+    image: grafana/grafana:10.4.0
+    environment:
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+    ports: ["3000:3000"]
+    depends_on: [prometheus]

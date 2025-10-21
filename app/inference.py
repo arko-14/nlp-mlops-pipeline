@@ -1,14 +1,32 @@
-import os, time
+import os, json, time, torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from huggingface_hub import snapshot_download
-import torch
 
-MODEL_ID  = os.getenv("MODEL_ID", "sandipan14/fine-grained")
-CONF_THRESH = float(os.environ.get("CONF_THRESH", "0.5"))
+MODEL_ID = os.getenv("MODEL_ID", "sandipan14/fine-grained")
+LOCAL_DIR = os.getenv("MODEL_DIR", "models/fine_tuned")  
+HF_TOKEN  = os.getenv("HF_TOKEN")
 
-model_path = snapshot_download(repo_id=MODEL_ID)
+def find_model_dir(root: str) -> str:
+    for dirpath, _, files in os.walk(root):
+        f = set(files)
+        if "config.json" in f and ("model.safetensors" in f or "pytorch_model.bin" in f):
+            return dirpath
+    return root
 
-# Optional: set your own labels via env, e.g. CLASS_LABELS="World,Sports,Business,Sci/Tech"
+def get_model_path():
+    if os.path.exists(LOCAL_DIR):
+        return find_model_dir(LOCAL_DIR)
+    snap = snapshot_download(MODEL_ID, token=HF_TOKEN)
+    return find_model_dir(snap)
+
+model_path = get_model_path()
+tok = AutoTokenizer.from_pretrained(model_path, use_fast=True)
+mdl = AutoModelForSequenceClassification.from_pretrained(
+    model_path, low_cpu_mem_usage=True, torch_dtype=torch.float32
+).eval()
+
+
+
 _env_labels = os.getenv("CLASS_LABELS")
 ENV_LABELS = [s.strip() for s in _env_labels.split(",")] if _env_labels else None
 DEFAULT_AGNEWS = ["World", "Sports", "Business", "Sci/Tech"]
@@ -28,8 +46,9 @@ else:
 if not id2label or all(str(v).upper().startswith("LABEL_") for v in id2label.values()):
     mdl.config.id2label = {i: names[i] for i in range(mdl.config.num_labels)}
     mdl.config.label2id = {v: k for k, v in mdl.config.id2label.items()}
-# local helper mapping
 ID2LABEL = mdl.config.id2label
+
+CONF_THRESH = 0.5  # Default confidence threshold, adjust as needed
 
 def predict_with_threshold(text: str):
     inputs = tok(text, return_tensors="pt", truncation=True, padding=True)
