@@ -286,10 +286,33 @@ Free to use and modify for educational and personal projects.
 
 
 
+```
+Inference UI
 
+```
 
 
 <img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/95915fab-b985-4d0c-b9da-62c0ea1575c6" />
+
+
+```
+```
+
+Mlflow UI
+
+
+
+<img width="1920" height="1080" alt="Screenshot 2025-10-21 182729" src="https://github.com/user-attachments/assets/208bbf8c-1cbb-4a5a-9f48-7641e0d63fe0" />
+
+
+```
+
+```
+
+Grafana Dashboard
+
+<img width="1920" height="1080" alt="Screenshot 2025-10-21 175243" src="https://github.com/user-attachments/assets/a75137bd-369c-46b4-8f66-d49f210aaa73" />
+
 
 
 
