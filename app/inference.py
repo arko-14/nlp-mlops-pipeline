@@ -9,8 +9,8 @@ _env_labels = os.getenv("CLASS_LABELS")
 ENV_LABELS = [s.strip() for s in _env_labels.split(",")] if _env_labels else None
 DEFAULT_AGNEWS = ["World", "Sports", "Business", "Sci/Tech"]
 
-tok = AutoTokenizer.from_pretrained(MODEL_DIR)
-mdl = AutoModelForSequenceClassification.from_pretrained(MODEL_DIR)
+tok = AutoTokenizer.from_pretrained(MODEL_ID)
+mdl = AutoModelForSequenceClassification.from_pretrained(MODEL_ID)
 
 # ----- normalize id2label so we never show LABEL_2 -----
 id2label = getattr(mdl.config, "id2label", None) or {}
